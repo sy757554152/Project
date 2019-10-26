@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>贪吃蛇</title>
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+
+<body>
+    <div id="container">
+        <!-- 地图表格 -->
+        <div id="map">
+            <table id="map-table">
+
+            </table>
+        </div>
+        <!-- 按钮 -->
+        <div id="control">
+            <button id="start"></button>
+            <button id="setting"></button>
+            <button id="exit"></button>
+            <button id="help"></button>
+            <button id="speed"></button>
+        </div>
+        <div id="alert-grey"></div>
+        <div id="alert">
+            <div id="alert-head">
+                <button id="alert-button">[x]</button>
+            </div>
+            <div id="alert-thing">
+                Game Over!
+            </div>
+        </div>
+    </div>
+    <script>
+        // 初始化地图
+        var direction = "right";
+        var a = 20;
+        var oTable = document.getElementById('map-table');
+        var timer;
+        var oStart = document.getElementById('start');
+        var oSnakeBody = [];
+        var oMap = document.getElementById('map')
+        var oFood;
+        var oAlert=document.getElementById('alert');
+        var oAlertGrey=document.getElementById('alert-grey');
+        var oAlertButton=document.getElementById('alert-button');
+        for (var i = 0; i < 20; i++) {
+            var oTr = document.createElement('tr');
+            for (var j = 0; j < 30; j++) {
+                var oTd = document.createElement('td');
+                oTr.appendChild(oTd);
+            }
+            oTable.appendChild(oTr);
+        }
+        // 初始化蛇
+        for (var i = 3; i > 0; i--) {
+            var oSnake = document.createElement('div');
+            oSnake.className = "map-snake";
+            oSnake.style.left = (i + 1) * a + "px";
+            oSnake.style.top = 40 + "px";
+            oMap.appendChild(oSnake);
+            oSnake.pos = {
+                left: oSnake.offsetLeft,
+                top: oSnake.offsetTop
+            }
+            oSnakeBody.push(oSnake);
+        }
+        // 初始化食物
+        function setFood() {
+            do {
+                var oFlag = true;//判断蛇与食物的位置是否重合 true为未重合
+                var iTop = parseInt(Math.random() * 20)//0-19
+                iTop = iTop * a;
+                var iLeft = parseInt(Math.random() * 30)//0-29
+                iLeft = iLeft * a;
+                for (var i = 0; i < oSnakeBody.length; i++) {
+                    if (oSnakeBody[i].offsetLeft == iLeft && oSnakeBody[i].offsetTop == iTop) {
+                        oFlag = false;
+                    }
+                }
+                if (oFlag) {
+                    oFood = document.createElement('div');
+                    oFood.className = "map-food";
+                    oFood.style.top = iTop + 'px';
+                    oFood.style.left = iLeft + "px";
+                    oMap.appendChild(oFood);
+                    oFood.pos = {
+                        left: oFood.offsetLeft,
+                        top: oFood.offsetTop
+                    }
+                }
+            } while (!oFlag)
+        }
+        setFood();
+        // 蛇的移动
+        oStart.onclick = function () {
+            if (!timer) {
+                timer=setInterval(function () {
+                    snakeMove();
+                }, 300)
+            }
+        };
+        function snakeMove() {
+            var oSnakeHead = oSnakeBody[0];
+            if (direction == "down") {
+                oSnakeHead.style.top = oSnakeBody[0].offsetTop + a + 'px';
+            }
+            else if (direction == "left") {
+                oSnakeHead.style.left = oSnakeBody[0].offsetLeft - a + 'px';
+            }
+            else if (direction == "up") {
+                oSnakeHead.style.top = oSnakeBody[0].offsetTop - a + 'px';
+            }
+            else if (direction == "right") {
+                oSnakeHead.style.left = oSnakeBody[0].offsetLeft + a + 'px';
+            }
+            if (oSnakeHead.offsetLeft == oFood.offsetLeft && oSnakeHead.offsetTop == oFood.offsetTop) {
+                oFood.className = "map-snake";
+                oFood.style.left = oSnakeHead.pos.left + 'px';
+                oFood.style.top = oSnakeHead.pos.top + "px";
+                oSnakeBody.splice(1, 0, oFood);
+                setFood();
+            }
+            else {
+                for (var i = 1; i < oSnakeBody.length; i++) {
+                    oSnakeBody[i].style.top = oSnakeBody[i - 1].pos.top + 'px';
+                    oSnakeBody[i].style.left = oSnakeBody[i - 1].pos.left + 'px';
+                }
+            }
+            for (var i = 0; i < oSnakeBody.length; i++) {
+                oSnakeBody[i].pos.left = oSnakeBody[i].offsetLeft;
+                oSnakeBody[i].pos.top = oSnakeBody[i].offsetTop;
+            }
+            for(var i=4;i<oSnakeBody.length;i++){
+                if(oSnakeHead.offsetLeft==oSnakeBody[i].offsetLeft&&oSnakeHead.offsetTop==oSnakeBody[i].offsetTop){
+                    oAlert.style.display="block";
+                    oAlertGrey.style.display="block";
+                    clearInterval(timer);
+                }
+            }
+            if(oSnakeHead.offsetLeft==-20||oSnakeHead.offsetLeft==620||oSnakeHead.offsetTop==-20||oSnakeHead.offsetTop==420){
+                oAlert.style.display="block";
+                oAlertGrey.style.display="block";
+                clearInterval(timer);
+            }
+        }
+
+        document.onkeyup = function (e) {
+            e = e || window.event;
+            var key = e.which || e.keyCode;
+            oNow = e.keyCode;
+            if (key == 40) {
+                if (direction != "up") {
+                    direction = "down";
+                }
+            }
+            else if (key == 39) {
+                if (direction != "left") {
+                    direction = "right";
+                }
+            }
+            else if (key == 38) {
+                if (direction != "down") {
+                    direction = "up";
+                }
+            }
+            else if (key == 37) {
+                if (direction != "right") {
+                    direction = "left";
+                }
+            }
+            snakeMove();
+        }
+        oAlertButton.onclick=function(){
+            console.log(oAlertButton);
+            oAlert.style.display="none";
+            oAlertGrey.style.display="none";
+        }
+    </script>
+</body>
+
+</html>
