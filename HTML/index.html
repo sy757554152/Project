@@ -23,7 +23,11 @@
             <button id="setting"></button>
             <button id="exit"></button>
             <button id="help"></button>
-            <button id="speed"></button>
+            <div id="speed">
+                <button id="speed-1">Level1</button>
+                <button id="speed-2">Level2</button>
+                <button id="speed-3">Level3</button>
+            </div>
         </div>
         <div id="alert-grey"></div>
         <div id="alert">
@@ -37,8 +41,13 @@
     </div>
     <script>
         // 初始化地图
+        var oSpeed1=document.getElementById('speed-1');
+        var oSpeed2=document.getElementById('speed-2');
+        var oSpeed3=document.getElementById('speed-3');
         var direction = "right";
         var a = 20;
+        var oFlag=true;
+        var oLevel=300;
         var oTable = document.getElementById('map-table');
         var timer;
         var oStart = document.getElementById('start');
@@ -57,18 +66,21 @@
             oTable.appendChild(oTr);
         }
         // 初始化蛇
-        for (var i = 3; i > 0; i--) {
-            var oSnake = document.createElement('div');
-            oSnake.className = "map-snake";
-            oSnake.style.left = (i + 1) * a + "px";
-            oSnake.style.top = 40 + "px";
-            oMap.appendChild(oSnake);
-            oSnake.pos = {
-                left: oSnake.offsetLeft,
-                top: oSnake.offsetTop
+        function setSnake(){
+            for (var i = 3; i > 0; i--) {
+                var oSnake = document.createElement('div');
+                oSnake.className = "map-snake";
+                oSnake.style.left = (i + 1) * a + "px";
+                oSnake.style.top = 40 + "px";
+                oMap.appendChild(oSnake);
+                oSnake.pos = {
+                    left: oSnake.offsetLeft,
+                    top: oSnake.offsetTop
+                }
+                oSnakeBody.push(oSnake);
             }
-            oSnakeBody.push(oSnake);
         }
+        setSnake();
         // 初始化食物
         function setFood() {
             do {
@@ -98,12 +110,42 @@
         setFood();
         // 蛇的移动
         oStart.onclick = function () {
-            if (!timer) {
+            document.onkeyup = function (e) {
+                e = e || window.event;
+                var key = e.which || e.keyCode;
+                oNow = e.keyCode;
+                if (key == 40) {
+                    if (direction != "up") {
+                        direction = "down";
+                    }
+                }
+                else if (key == 39) {
+                    if (direction != "left") {
+                        direction = "right";
+                    }
+                }
+                else if (key == 38) {
+                    if (direction != "down") {
+                        direction = "up";
+                    }
+                }
+                else if (key == 37) {
+                    if (direction != "right") {
+                        direction = "left";
+                    }
+                }
+                if(!oFlag){
+                    snakeMove();
+                }
+            }
+            if (oFlag) {
+                oFlag=false;
                 timer=setInterval(function () {
                     snakeMove();
-                }, 300)
+                }, oLevel)
             }
         };
+        //蛇的移动
         function snakeMove() {
             var oSnakeHead = oSnakeBody[0];
             if (direction == "down") {
@@ -135,50 +177,57 @@
                 oSnakeBody[i].pos.left = oSnakeBody[i].offsetLeft;
                 oSnakeBody[i].pos.top = oSnakeBody[i].offsetTop;
             }
+            //判断是否吃掉自己
             for(var i=4;i<oSnakeBody.length;i++){
                 if(oSnakeHead.offsetLeft==oSnakeBody[i].offsetLeft&&oSnakeHead.offsetTop==oSnakeBody[i].offsetTop){
                     oAlert.style.display="block";
                     oAlertGrey.style.display="block";
+                    oFlag=true;
                     clearInterval(timer);
                 }
             }
-            if(oSnakeHead.offsetLeft==-20||oSnakeHead.offsetLeft==620||oSnakeHead.offsetTop==-20||oSnakeHead.offsetTop==420){
+            if(oSnakeHead.offsetLeft==-20||oSnakeHead.offsetLeft==600||oSnakeHead.offsetTop==-20||oSnakeHead.offsetTop==400){
                 oAlert.style.display="block";
                 oAlertGrey.style.display="block";
+                oFlag=true;
                 clearInterval(timer);
             }
         }
-
-        document.onkeyup = function (e) {
-            e = e || window.event;
-            var key = e.which || e.keyCode;
-            oNow = e.keyCode;
-            if (key == 40) {
-                if (direction != "up") {
-                    direction = "down";
-                }
-            }
-            else if (key == 39) {
-                if (direction != "left") {
-                    direction = "right";
-                }
-            }
-            else if (key == 38) {
-                if (direction != "down") {
-                    direction = "up";
-                }
-            }
-            else if (key == 37) {
-                if (direction != "right") {
-                    direction = "left";
-                }
-            }
-            snakeMove();
-        }
+        //点击重新初始化地图和蛇
         oAlertButton.onclick=function(){
-            console.log(oAlertButton);
             oAlert.style.display="none";
             oAlertGrey.style.display="none";
+            for(var i=0;i<oSnakeBody.length;i++){
+                oMap.removeChild(oSnakeBody[i]);
+            }
+            oMap.removeChild(oFood);
+            oSnakeBody.splice(0,oSnakeBody.length);
+            setSnake();
+            setFood();
+            oFlag=true;
+            direction="right";
+        }
+        //速度
+        oSpeed1.onclick=function(){
+            oLevel=300;
+            clearInterval(timer);
+            timer=setInterval(function () {
+                snakeMove();
+            }, oLevel)
+        }
+        oSpeed2.onclick=function(){
+            oLevel=200;
+            clearInterval(timer);
+            timer=setInterval(function () {
+                snakeMove();
+            }, oLevel)
+        }
+        oSpeed3.onclick=function(){
+            oLevel=100;
+            clearInterval(timer);
+            timer=setInterval(function () {
+                snakeMove();
+            }, oLevel)
         }
     </script>
 </body>
