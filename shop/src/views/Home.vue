@@ -19,9 +19,19 @@
                 </swiper-slide>
             </swiper>
         </div>
+        <!-- 推荐商品 -->
         <div class="variety">
             <p class="variety-title">推荐商品</p>
+            <ul class="variety-list">
+                <li class="variety-list-thing" v-for="(obj,index) in productShowlist" :key="index">
+                    <img :src="obj.img" alt="">
+                    <div class="variety-list-thing-name">{{obj.name}}</div>
+                    <div>{{obj.price}}</div>
+                </li>
+            </ul>
         </div>
+        <!-- 加载 -->
+        <van-loading class="loading" size="24px" v-show="flag" type="spinner" vertical>加载中...</van-loading>
     </div>
 </template>
 
@@ -38,11 +48,14 @@
         data(){
             return{
                 productslist:[],
+                productShowlist:[],
                 swipe:[],
                 hotSwiper:[],
                 swiperOption:{
                     slidesPerView:3
-                }
+                },
+                num:0,
+                flag:false,
             }
         },
         created(){
@@ -50,7 +63,7 @@
             axios.get(urlSwipe)
             .then(res=>{
                 this.swipe=res.data;
-                console.log(this.swipe);
+                // console.log(this.swipe);
             })
             .catch(()=>{
                 console.log('no');
@@ -59,32 +72,37 @@
             axios.get(urlHotSwiper)
             .then(res=>{
                 this.hotSwiper=res.data;
-                console.log(this.hotSwiper);
+                // console.log(this.hotSwiper);
             })
             .catch(()=>{
                 console.log('no');
             })
             let urlProductsList=url.getVarietyItem;
-            axios.get(urlProductsList)
-            .then(res=>{
-                this.productslist=res.data;
-                console.log(this.productslist);
-            })
-            .catch(()=>{
-                console.log('no');
-            })
+            this.getAxios(urlProductsList);
         },
         methods:{
-            getAxios(url,list){
+            getAxios(url){
+                this.flag=true;
                 axios.get(url)
                 .then(res=>{
-                    list=res.data;
-                    console.log(list);
-                })
-                .catch(()=>{
+                    let shopList=new Array();
+                    shopList=res.data;
+                    this.productShowlist=[...this.productShowlist,...shopList];
+                    this.flag=false;
+                }).catch(()=>{
                     console.log('no');
                 })
             }
+        },
+        mounted(){
+            window.onscroll = () => {
+                var scrollTop =document.documentElement.scrollTop || document.body.scrollTop;//滚动条距离顶部的高度
+                var clientHeight =document.documentElement.clientHeight || document.body.clientHeight;//页面可视高度
+                var scrollHeight =document.documentElement.scrollHeight || document.body.scrollHeight;//文档总高度
+                if (Math.abs(scrollHeight - scrollTop - clientHeight) <1) {//Math.abs()  绝对值
+                    this.getAxios(url.getVarietyItem);
+                }
+            };
         }
     }
 </script>
@@ -92,6 +110,7 @@
 <style lang="scss" scoped>
     .container{
         width: 100%;
+        position: relative;
         background: #eee;
         .swipe{
             width: 100%;
@@ -110,10 +129,8 @@
             width: 100%;
             margin-top: 0.2rem;
             background: #fff;
-            font-size: 0.24rem;
             &-title{
                 width: 100%;
-                margin: 0;
                 height: 0.5rem;
                 padding-left:0.2rem;
                 box-sizing: border-box;
@@ -123,7 +140,7 @@
             }
             &-swiper{
                 width: 100%rem;
-                height: 3rem;
+                height: 3.5rem;
                 &-slide{
                     width: 2rem;
                     text-align: center;
@@ -144,6 +161,46 @@
                 }
             }
         }
-
+        .variety{
+            width: 100%;
+            margin-top: 0.2rem;
+            margin-bottom: 1rem;
+            background: #fff;
+            &-title{
+                width: 100%;
+                height: 0.5rem;
+                line-height: 0.5rem;
+                text-align: center;
+                font-weight: bold;
+            }
+            &-list{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                text-align: center;
+                &-thing{
+                    flex: 45%;
+                    img{
+                        width: 2rem;
+                        height: 2rem;
+                    }
+                    &-name{
+                        height: 1rem;
+                        padding: 0 0.6rem 0 0.6rem;
+                        overflow:hidden;
+                        text-overflow:ellipsis;
+                        display:-webkit-box;
+                        -webkit-line-clamp:2;
+                        -webkit-box-orient:vertical;
+                    }
+                }
+            }
+        }
+        .loading{
+            position: fixed;
+            top:50%;
+            left: 50%;
+            transform:translate(-50%,-50%);
+        }
     }
 </style>
