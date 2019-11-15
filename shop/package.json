@@ -10,6 +10,11 @@
   "dependencies": {
     "axios": "^0.19.0",
     "core-js": "^3.3.2",
+    "ejs": "^2.7.1",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa-views": "^6.2.1",
     "vant": "^2.2.10",
     "vue": "^2.6.10",
     "vue-awesome-swiper": "^3.1.3",
