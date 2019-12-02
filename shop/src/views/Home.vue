@@ -1,5 +1,9 @@
 <template>
     <div class="container">
+        <van-nav-bar title="首页" class="header">
+            <van-icon name="search" slot="left"></van-icon>
+            <van-icon slot="right" @click="login()">{{userInfo.userName}}</van-icon>
+        </van-nav-bar>
         <van-swipe :autoplay="3000" class="swipe">
             <!-- 轮播图 -->
             <van-swipe-item class="swipe-item" v-for="(obj,index) in swipe" :key="index">
@@ -40,10 +44,15 @@
     import url from "@/service.config.js";
     import 'swiper/dist/css/swiper.css'
     import { swiper, swiperSlide } from 'vue-awesome-swiper'
+    import {mapState} from 'vuex';
+    import {mapMutations} from 'vuex';
     export default {
+        computed:{
+            ...mapState(['userInfo'])
+        },
         components:{
             swiper,
-            swiperSlide
+            swiperSlide,
         },
         data(){
             return{
@@ -92,7 +101,15 @@
                 }).catch(()=>{
                     console.log('no');
                 })
-            }
+            },
+            login(){
+                if(this.userInfo.login){
+                    this.$router.push(`/mine${this.userInfo.path}`);
+                }else{
+                    this.$router.push('/mine');
+                }
+            },
+            ...mapMutations([])
         },
         mounted(){
             window.onscroll = () => {
@@ -141,6 +158,7 @@
             &-swiper{
                 width: 100%rem;
                 height: 3.5rem;
+                padding-left:0.1rem; 
                 &-slide{
                     width: 2rem;
                     text-align: center;

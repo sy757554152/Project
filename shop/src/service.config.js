@@ -1,8 +1,14 @@
 const MOCKURL = "http://www.shop.com/";
-// const LOCALURL ="http://localhost:8080/";
+const SERVERURL ="http://localhost:3000/";
 const URL ={
     getVarietyItem:MOCKURL+"getlist",
     getSwipeItem:MOCKURL+"getSwipe",
-    getHotSwiperItem:MOCKURL +"getHotSwiper"
+    getHotSwiperItem:MOCKURL +"getHotSwiper",
+    registUser:SERVERURL+'user/registUser',
+    loginUser:SERVERURL+'user/loginUser',
+    getProductsByType:SERVERURL+'product/getProductsByType',
+    getTypes:SERVERURL+'type/getTypes',
+    getDetail:SERVERURL+'product/getDetail'
+
 };
 export default URL;

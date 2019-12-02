@@ -5,11 +5,19 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    name:'首页'
+    userInfo:{
+      userName:"未登录",
+      path:"/mine",
+      login:false
+    }
   },
   mutations: {
-    change(state,name){
-      state.name=name;
+    loginInfo(state,[userName,path]){
+      state.userInfo.userName=userName;
+      state.userInfo.path=path;
+    },
+    changeLogin(state,login){
+      state.userInfo.login=login;
     }
   },
   actions: {

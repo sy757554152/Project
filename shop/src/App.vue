@@ -1,18 +1,16 @@
 <template>
   <div id="app">
-    <shop-header></shop-header>
     <router-view></router-view>
-    <shop-footer></shop-footer>
+    <!-- <shop-footer></shop-footer> -->
+    <router-view name="shop-footer"></router-view>
   </div>
 </template>
 <script>
-import ShopHeader from './components/ShopHeader'
-import ShopFooter from './components/ShopFooter'
+// import ShopFooter from './components/ShopFooter'
 export default {
-  components:{
-    ShopHeader,
-    ShopFooter
-  }
+  // components:{
+  //   ShopFooter
+  // }
 }
 </script>>
 <style lang="scss">

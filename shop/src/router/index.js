@@ -4,28 +4,54 @@ import Home from '../views/Home'
 import Category from '../views/Category'
 import Cart from '../views/Cart'
 import Mine from '../views/Mine'
+import LoginMine from '../views/LoginMine'
+import ProductDetail from '../views/ProductDetail'
+import ShopFooter from '../components/ShopFooter'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    components:{
+      default:Home,
+      'shop-footer':ShopFooter
+    }
   },
   {
     path:'/category',
     name:'category',
-    component:Category
+    components:{
+      default:Category,
+      'shop-footer':ShopFooter
+    }
   },
   {
     path:'/cart',
     name:'cart',
-    component:Cart
+    components:{
+      default:Cart,
+      'shop-footer':ShopFooter
+    }
   },
   {
     path:'/mine',
     name:'mine',
-    component:Mine
+    components:{
+      default:Mine,
+      'shop-footer':ShopFooter
+    }
+  },{
+    path:'/detail/:id',
+    name:'detail',
+    component:ProductDetail
+  },{
+    path:'/mine/:loginName',
+    name:'login',
+    components:{
+      default:LoginMine,
+      'shop-footer':ShopFooter
+    }
   }
 ]
 

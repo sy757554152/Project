@@ -1,6 +1,9 @@
 <template>
     <van-tabbar v-model="active">
-        <van-tabbar-item v-for="(obj,index) in menu" :key="index" @click.native="change(obj.title)" :name="obj.name" :icon="obj.icon" :to="obj.path">{{obj.title}}</van-tabbar-item>
+        <van-tabbar-item icon="wap-home-o" to="/">首页</van-tabbar-item>
+        <van-tabbar-item icon="records" to="/category">分类</van-tabbar-item>
+        <van-tabbar-item icon="cart" to="/cart">购物车</van-tabbar-item>
+        <van-tabbar-item icon="contact" @click="changeRouter()">我的</van-tabbar-item>
     </van-tabbar>
 </template>
 
@@ -9,37 +12,21 @@
     export default {
         data(){
             return{
-                active:'home',
-                menu:[
-                    {
-                        name:'home',
-                        icon:'wap-home-o',
-                        path:'/',
-                        title:'商城'
-                    },{
-                        name:'category',
-                        icon:'records',
-                        path:'/category',
-                        title:'分类'
-                    },{
-                        name:'cart',
-                        icon:'shopping-cart-o',
-                        path:'/cart',
-                        title:'购物车'
-                    },{
-                        name:'mine',
-                        icon:'contact',
-                        path:'/mine',
-                        title:'我的'
-                    }
-                ]
+                active:0
             }
         },
         computed:{
-            ...mapState(['name'])
+            ...mapState(['userInfo'])
         },
         methods:{
-            ...mapMutations(['change'])
+            ...mapMutations([]),
+            changeRouter(){
+                if(this.userInfo.login){
+                    this.$router.push(`/mine${this.userInfo.path}`);
+                }else{
+                    this.$router.push('/mine');
+                }
+            }
         }
     }
 </script>
