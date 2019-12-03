@@ -69,8 +69,8 @@
                         password:this.loginPassword
                     }
                 }).then((res)=>{
-                    console.log(res);
                     if(res.data.code==200){
+                        console.log(res);
                         new Promise((resolve)=>{
                             setTimeout(()=>{
                                 resolve();
@@ -78,10 +78,10 @@
                         }).then(()=>{
                             this.$toast.success('登陆成功');
                             this.loginInfo([this.loginUsername,'/'+this.loginUsername]);
+                            this.changeId(res.data.userInfo._id);
                             this.changeLogin(true);
                             this.loginPassword="";
                             this.loginUsername="";
-                            console.log(this.loginflag);
                             this.loginflag=!this.loginflag;
                             this.$router.go(-1);
                         }).catch(err=>{
@@ -94,7 +94,7 @@
                     console.log(err);
                 })
             },
-            ...mapMutations(['loginInfo','changeLogin'])
+            ...mapMutations(['loginInfo','changeLogin','changeId'])
         }
     }
 </script>

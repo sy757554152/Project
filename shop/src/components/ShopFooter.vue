@@ -1,5 +1,5 @@
 <template>
-    <van-tabbar v-model="active">
+    <van-tabbar v-model="active" @change="change">
         <van-tabbar-item icon="wap-home-o" to="/">首页</van-tabbar-item>
         <van-tabbar-item icon="records" to="/category">分类</van-tabbar-item>
         <van-tabbar-item icon="cart" to="/cart">购物车</van-tabbar-item>
@@ -26,7 +26,13 @@
                 }else{
                     this.$router.push('/mine');
                 }
+            },
+            change(){
+                localStorage.setItem('active',this.active);
             }
+        },
+        created(){
+            this.active=parseInt(localStorage.getItem('active'));
         }
     }
 </script>

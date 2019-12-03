@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home'
-import Category from '../views/Category'
-import Cart from '../views/Cart'
-import Mine from '../views/Mine'
+// import Home from '../views/Home'
+// import Category from '../views/Category'
+// import Cart from '../views/Cart'
+// import Mine from '../views/Mine'
+let Home=()=> import('../views/Home')
+let Category=()=> import('../views/Category')
+let Cart=()=> import('../views/Cart')
+let Mine=()=> import('../views/Mine')
 import LoginMine from '../views/LoginMine'
 import ProductDetail from '../views/ProductDetail'
 import ShopFooter from '../components/ShopFooter'
+import Error from '../views/Error'
 Vue.use(VueRouter)
 
 const routes = [
@@ -16,6 +21,9 @@ const routes = [
     components:{
       default:Home,
       'shop-footer':ShopFooter
+    },
+    meta:{
+      keepAlive: true
     }
   },
   {
@@ -24,6 +32,9 @@ const routes = [
     components:{
       default:Category,
       'shop-footer':ShopFooter
+    },
+    meta:{
+      keepAlive: true
     }
   },
   {
@@ -32,6 +43,9 @@ const routes = [
     components:{
       default:Cart,
       'shop-footer':ShopFooter
+    },
+    meta:{
+      keepAlive: true
     }
   },
   {
@@ -40,8 +54,12 @@ const routes = [
     components:{
       default:Mine,
       'shop-footer':ShopFooter
+    },
+    meta:{
+      keepAlive: true
     }
-  },{
+  },
+  {
     path:'/detail/:id',
     name:'detail',
     component:ProductDetail
@@ -52,6 +70,9 @@ const routes = [
       default:LoginMine,
       'shop-footer':ShopFooter
     }
+  },{
+    path:'*',
+    component:Error
   }
 ]
 

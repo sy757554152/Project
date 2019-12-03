@@ -43,7 +43,20 @@
             },
             addCart(){
                 if(this.userInfo.login){
-                    console.log(this.userInfo.login);
+                    axios({
+                        url:url.addCart,
+                        method:'post',
+                        data:{
+                            userId:this.userInfo.id,
+                            productId:this.detail._id
+                        }
+                    }).then(res=>{
+                        console.log(res);
+                        this.$toast.success('加入购物车成功');
+                    }).catch(err=>{
+                        console.log(err);
+                        this.$toast.fail('加入购物车失败');
+                    })
                 }
                 else{
                     this.$toast.fail('请登录');

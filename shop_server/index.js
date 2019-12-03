@@ -17,10 +17,12 @@ const Router=require('koa-router');
 let user=require('./controller/user')
 let product=require('./controller/product')
 let type=require('./controller/type')
+let cart=require('./controller/cart')
 let router=new Router();
 router.use('/user',user.routes());
 router.use('/product',product.routes());
 router.use('/type',type.routes());
+router.use('/cart',cart.routes());
 app.use(router.routes());
 app.use(router.allowedMethods());
 

@@ -9,10 +9,10 @@ import '@/mock/mock.js'
 // import Vant from 'vant'
 // import 'vant/lib/index.css'
 // Vue.use(Vant);
-import {GoodsAction,
-  GoodsActionIcon,
+import {GoodsAction,Card ,
+  GoodsActionIcon,SubmitBar ,
   GoodsActionButton,List,PullRefresh  ,Sidebar, SidebarItem, Row, Col,NavBar,Icon,Tabbar,TabbarItem,Swipe, SwipeItem,Lazyload,Loading,Tab,Tabs,Field,CellGroup,Button,Toast} from 'vant';
-Vue.use(GoodsAction).use(GoodsActionIcon).use(GoodsActionButton).use(List).use(PullRefresh).use(Sidebar).use(SidebarItem).use(Row).use(Col).use(NavBar).use(Icon).use(Tabbar).use(TabbarItem).use(Swipe).use(SwipeItem).use(Lazyload).use(Loading).use(Tab).use(Tabs).use(Field).use(CellGroup).use(Button).use(Toast);
+Vue.use(SubmitBar ).use(Card).use(GoodsAction).use(GoodsActionIcon).use(GoodsActionButton).use(List).use(PullRefresh).use(Sidebar).use(SidebarItem).use(Row).use(Col).use(NavBar).use(Icon).use(Tabbar).use(TabbarItem).use(Swipe).use(SwipeItem).use(Lazyload).use(Loading).use(Tab).use(Tabs).use(Field).use(CellGroup).use(Button).use(Toast);
 Vue.config.productionTip = false
 
 new Vue({

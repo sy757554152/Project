@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <router-view></router-view>
-    <!-- <shop-footer></shop-footer> -->
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
     <router-view name="shop-footer"></router-view>
   </div>
 </template>
+
 <script>
-// import ShopFooter from './components/ShopFooter'
 export default {
-  // components:{
-  //   ShopFooter
-  // }
+
 }
 </script>>
 <style lang="scss">

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userInfo:{
+      id:'',
       userName:"未登录",
       path:"/mine",
       login:false
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     changeLogin(state,login){
       state.userInfo.login=login;
+    },
+    changeId(state,id){
+      state.userInfo.id=id;
     }
   },
   actions: {
