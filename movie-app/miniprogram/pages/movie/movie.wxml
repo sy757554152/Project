@@ -1,0 +1,19 @@
+<block wx:for="{{movieList}}" wx:key="{{index}}">
+  <view class="movielist">
+    <view class="movielist-image"><image class="movielist-img" src="{{item.images.medium}}"></image></view>
+    <view class="movielist-details">
+      <view>
+        <text class="movielist-details-title">{{item.title}}</text>
+      </view>
+      <view>豆瓣评分:
+        <text class="movielist-details-rating">{{item.rating.average}}</text>
+      </view>
+      <view>上映时间:{{item.mainland_pubdate}}</view>
+      <view class="movielist-details-actor">主演:
+        <text wx:for="{{item.casts}}" wx:key="{{index}}">{{item.name}} </text>
+      </view>
+      <view>年份:{{item.year}}</view>
+    </view>
+    <button size="mini" bindtap="goComment" data-movieid="{{item.id}}" class="movielist-comment">评价</button>
+  </view>
+</block>

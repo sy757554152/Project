@@ -1,0 +1,66 @@
+.mine{
+  width: 100%;
+  height: 400rpx;
+  background: #E54847;
+  text-align: center;
+  color: #fff;
+}
+.mine-image{
+  margin: 50rpx auto;
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%; 
+  overflow: hidden;
+}
+.mine-img{
+  width: 200rpx;
+  height: 200rpx;
+}
+.detail-openId{
+  margin-left: 20rpx;
+  border-bottom: 1px solid #333;
+}
+.detail-openId-title{
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+.detail-openId-thing{
+  color: #333;
+  font-size: 30rpx;
+}
+.detail-cloudId{
+  margin-left: 20rpx;
+  border-bottom: 1px solid #333;
+}
+.detail-cloudId-title{
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+.detail-cloudId-thing{
+  color: #333;
+  font-size: 30rpx;
+}
+.detail-country{
+  margin-left: 20rpx;
+  border-bottom: 1px solid #333;
+}
+.detail-country-title{
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+.detail-country-thing{
+  color: #333;
+  font-size: 30rpx;
+}
+.detail-language{
+  margin-left: 20rpx;
+  border-bottom: 1px solid #333;
+}
+.detail-language-title{
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+.detail-language-thing{
+  color: #333;
+  font-size: 30rpx;
+}

@@ -1,0 +1,43 @@
+<view>
+  <view class="background-img" style="background : url({{detail.images.large}}) 0 0 no-repeat">
+  </view>
+  <view class="background-black"></view>
+  <view class="detail">
+    <view class="detail-image">
+      <image class="detail-img" src="{{detail.images.large}}"></image>
+    </view>
+    <view class="detail-details">
+      <view class="detail-title">
+        <text>{{detail.title}}</text>
+      </view>
+      <view >评分:
+        <text class="detail-rating">{{detail.rating.average}}</text>分
+      </view>
+      <view class="detail-type">类型:
+        <text wx:for="{{detail.tags}}" wx:key="{{index}}">{{item}} </text>
+      </view>
+      <view class="detail-actor">演员:
+        <text wx:for="{{detail.casts}}" wx:key="{{index}}">{{item.name}} </text>
+      </view>
+      <view class="detail-time">上映时间:{{detail.mainland_pubdate}}</view>
+      <view class="detail-year">年份:{{detail.year}}</view>
+    </view>
+  </view>
+</view>
+<view class="detail-summary"> 简介:
+  <view class="detail-summary-detail">{{detail.summary}}</view>
+</view>
+<view>
+  <van-field value="{{ content }}" placeholder="请输入电影评价" bind:change="onContentChange" />
+  <van-rate value="{{ rate }}" bind:change="onRateChange" />
+  <view>
+    <van-button class="gitImg" type="warning" bindtap="getImg">上传图片</van-button>
+  </view>
+  <block class="image" wx:for="{{img}}" wx:key="{{index}}">
+    <image class="img" src="{{item}}"></image>
+  </block>
+  
+</view>
+<view class="submit">
+  <van-button type="danger" size="large" bindtap="submit">提交</van-button>
+</view>

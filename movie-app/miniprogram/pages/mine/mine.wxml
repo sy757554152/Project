@@ -1,0 +1,27 @@
+<view class="mine">
+  <view class="mine-image">
+    <open-data class="mine-img" type="userAvatarUrl"></open-data>
+  </view>
+  <open-data class="mine-name" type="userNickName"></open-data>
+</view>
+<button wx:if="{{flag}}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">获取用户信息</button>
+<view wx:else class="detail">
+  <view class="detail-openId">
+    <view class="detail-openId-title">OpenID</view>
+    <view class="detail-openId-thing">{{openId}}</view>
+  </view>
+  <view class="detail-cloudId">
+    <view class="detail-cloudId-title">CloudID</view>
+    <view class="detail-cloudId-thing">{{cloudId}}</view>
+  </view>
+  <view>
+    <view class="detail-country">
+      <view class="detail-country-title">Country</view>
+      <view class="detail-country-thing">{{country}}</view>
+    </view>
+  </view>
+  <view class="detail-language">
+    <view class="detail-language-title">Language</view>
+    <view class="detail-language-thing">{{language}}</view>
+  </view>
+</view>

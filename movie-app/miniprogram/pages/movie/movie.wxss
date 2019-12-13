@@ -1,0 +1,40 @@
+.movielist{
+  height: 400rpx;
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid #000;
+}
+.movielist-image{
+  width: 300rpx;
+  height: 100%;
+  margin-right: 5rpx;
+}
+.movielist-img{
+  width: 300rpx;
+  height: 100%;
+}
+.movielist-details{
+  flex: 1;
+}
+.movielist-details-title{
+  color: #333;
+  font-size: 40rpx;
+  font-weight: bolder;
+}
+.movielist-details-rating{
+  color: #faaf00;
+}
+.movielist-details-actor{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+.movielist-comment{
+  height: 60rpx;
+  margin-top: 120rpx;
+  background: #e54847;
+  color: #fff;
+  font-size: 27rpx;
+}
